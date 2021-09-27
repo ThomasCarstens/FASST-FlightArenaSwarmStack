@@ -1,21 +1,51 @@
-Code initiated by txa on 20 November 2020
-Comments added on 27 September 2021
-See Thesis
+##### Code initiated by txa on 20 November 2020
+##### Comments added on 27 September 2021
+##### See Thesis
 
-This repository documents the development process of a testbed for service drones.
+### As part of the testbed for service drones, we offer a library of **well-known swarm behaviors**, which is offered open-source to practitioners of the Crazyswarm Project. This is the first collection of ‘swarm patterns’ known to-date on this swarm framework. The library includes:
 
-* Encapsulate multi-step tasks
+* Encapsulating multi-step tasks
 
-* Encapsulate swarm instructions
+* Encapsulating swarm instructions
 
-* Encapsulate individual task execution
-
-Each of these can be examined in turn.
-
+* Encapsulating individual task execution
 
 # multi-step tasks
 Multi-step tasks encapsulate the full swarm stack, from single-robot commands to dynamic management.
+|def oneDrone_ToAndFro (self, single_id): |def execOctogonAndTrajOnCollision (self, ids_involved): |
+|-- | -- |
+|       # move to position 1
+        # move to position 2 
+        # loop
+        # generalized landing at abort |        
+        
+        # move drone 1
+        # move drone 2
+        # concurrent figures of eight
+        # 3 drone octogon
+        # generalized landing
+        # monitor an external flag and preempt if detected
+        # concurrent helis |
+
+
+    def oneDrone_ToAndFro (self, single_id):
+        # move to position 1
+        # move to position 2 
+        # loop
+        # generalized landing at abort
+
+    def execOctogonAndTrajOnCollision (self, ids_involved):
+
+        # move drone 1
+        # move drone 2
+        # concurrent figures of eight
+        # 3 drone octogon
+        # generalized landing
+        # monitor an external flag and preempt if detected
+        # concurrent helis
 > Examples: https://github.com/ThomasCarstens/Service_Drones_Thesis/blob/main/sm_structs.py
+
+
 ## Usage
     sm0 = self.execOctogonAndTrajOnCollision (self.ids)
     self.start_sm_on_thread(sm0)

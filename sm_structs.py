@@ -126,6 +126,14 @@ class stateMachineStructs(my_ids):
         self.octogon_points[7].y = -0.7
         self.octogon_points[7].z = 0.5
 
+        # monitor an external flag and preempt if detected
+        def agent_far_away(ud, msg):
+            if msg.data == True:
+                return True
+            return False
+
+        self.activate_on_true = lambda ud,msg: not agent_far_away(ud,msg)
+
     ###############################################
     # SECTION 2 | FUNCTIONS: create containers for the server functions.
 
@@ -135,6 +143,12 @@ class stateMachineStructs(my_ids):
                         my_newAction, 
                         goal = my_newGoal(point = traj_waypoint, id = drone_id )),
         return figure
+
+    def monitor_general(self, monitor_topic, monitor_type, truth_function):
+            monitor_s = MonitorState(monitor_topic, monitor_type,
+                                cond_cb = truth_function)
+            return monitor_s
+
 
     # FULL LAND CONTAINER # Land all the drones to their respective points
     def land_group(self, selected_drones, traj_waypoint):
@@ -332,17 +346,10 @@ class stateMachineStructs(my_ids):
             land_sm = self.land_group(selected_drones = self.ids, traj_waypoint = self.home_points_fo8)
             StateMachine.add('land_all', land_sm)
 
-
-            # monitor an external flag and preempt if detected
-            def agent_far_away(ud, msg):
-                if msg.data == True:
-                    return True
-                return False
-
-            monitor_s = MonitorState('/collision_detection', std_msgs.Bool,
-                                cond_cb = lambda ud,msg: not agent_far_away(ud,msg))
-
-            move_monitor_cc = self.monitored_trajs(internal_sm = octogon_sm, internal_name = 'DRONE_CHORE', monitor_s, monitor_name='MONITOR_COLLISIONS')
+            # monitor ros topic and setup concurrence
+            monitor_s = self.monitor_general(self, '/collision_detection', std_msgs.Bool, self.activate_on_true)
+            move_monitor_cc = self.monitored_trajs(internal_sm = octogon_sm, internal_name = 'DRONE_CHORE', 
+                                                                    monitor_s, monitor_name='MONITOR_COLLISIONS')
 
             StateMachine.add('MOVE_AND_MONITOR',
                     move_monitor_cc,
