@@ -1,5 +1,6 @@
 #! /usr/bin/env python
 from __future__ import print_function
+from numpy.lib.function_base import select
 import rospy
 
 import threading
@@ -22,78 +23,78 @@ import sys
 class polygonial():
     def __init__(self):
 
-        ids = [3, 1, 4]
+        self.ids = [3, 1, 4]
         #define the differents points
-        test_point= Point()
-        test_point.x = 0
-        test_point.y = 0
-        test_point.z = 0.5
+        self.test_point= Point()
+        self.test_point.x = 0
+        self.test_point.y = 0
+        self.test_point.z = 0.5
 
-        home_points_fo8 = [Point(), Point(), Point()]
+        self.home_points_fo8 = [Point(), Point(), Point()]
 
-        home_points_fo8[0].x = 0.0
-        home_points_fo8[0].y = 0.0
-        home_points_fo8[0].z = 0.3
+        self.home_points_fo8[0].x = 0.0
+        self.home_points_fo8[0].y = 0.0
+        self.home_points_fo8[0].z = 0.3
 
-        home_points_fo8[1].x = 0.3
-        home_points_fo8[1].y = 0.0
-        home_points_fo8[1].z = 0.3
+        self.home_points_fo8[1].x = 0.3
+        self.home_points_fo8[1].y = 0.0
+        self.home_points_fo8[1].z = 0.3
 
-        home_points_fo8[2].x = -0.3
-        home_points_fo8[2].y = 0.0
-        home_points_fo8[2].z = 0.3
+        self.home_points_fo8[2].x = -0.3
+        self.home_points_fo8[2].y = 0.0
+        self.home_points_fo8[2].z = 0.3
 
 
-        home_points_heli = [Point(), Point(), Point()]
+        self.home_points_heli = [Point(), Point(), Point()]
 
-        home_points_heli[0].x = 0.0
-        home_points_heli[0].y = 0.0
-        home_points_heli[0].z = 0.3
+        self.home_points_heli[0].x = 0.0
+        self.home_points_heli[0].y = 0.0
+        self.home_points_heli[0].z = 0.3
 
-        home_points_heli[1].x = 0.0
-        home_points_heli[1].y = 0.9-0.4
-        home_points_heli[1].z = 0.9
+        self.home_points_heli[1].x = 0.0
+        self.home_points_heli[1].y = 0.9-0.4
+        self.home_points_heli[1].z = 0.9
 
-        home_points_heli[2].x = -0.3
-        home_points_heli[2].y = 0.0
-        home_points_heli[2].z = 0.3
+        self.home_points_heli[2].x = -0.3
+        self.home_points_heli[2].y = 0.0
+        self.home_points_heli[2].z = 0.3
 
-        octogon_points = [Point(), Point(), Point(), Point(), Point(), Point(), Point(), Point()]
+        self.octogon_points = [Point(), Point(), Point(), Point(), Point(), Point(), Point(), Point()]
 
-        octogon_points[0].x = 0.5
-        octogon_points[0].y = -0.5
-        octogon_points[0].z = 0.5
+        self.octogon_points[0].x = 0.5
+        self.octogon_points[0].y = -0.5
+        self.octogon_points[0].z = 0.5
 
-        octogon_points[1].x = 0.7
-        octogon_points[1].y = 0.0
-        octogon_points[1].z = 0.5
+        self.octogon_points[1].x = 0.7
+        self.octogon_points[1].y = 0.0
+        self.octogon_points[1].z = 0.5
 
-        octogon_points[2].x = 0.5
-        octogon_points[2].y = 0.5
-        octogon_points[2].z = 0.5
+        self.octogon_points[2].x = 0.5
+        self.octogon_points[2].y = 0.5
+        self.octogon_points[2].z = 0.5
 
-        octogon_points[3].x = 0
-        octogon_points[3].y = 0.7
-        octogon_points[3].z = 0.5
+        self.octogon_points[3].x = 0
+        self.octogon_points[3].y = 0.7
+        self.octogon_points[3].z = 0.5
 
-        octogon_points[4].x = -0.5
-        octogon_points[4].y = 0.5
-        octogon_points[4].z = 0.5
+        self.octogon_points[4].x = -0.5
+        self.octogon_points[4].y = 0.5
+        self.octogon_points[4].z = 0.5
 
-        octogon_points[5].x =  -0.7
-        octogon_points[5].y = 0
-        octogon_points[5].z = 0.5
+        self.octogon_points[5].x =  -0.7
+        self.octogon_points[5].y = 0
+        self.octogon_points[5].z = 0.5
 
-        octogon_points[6].x = -0.5
-        octogon_points[6].y = -0.5
-        octogon_points[6].z = 0.5
+        self.octogon_points[6].x = -0.5
+        self.octogon_points[6].y = -0.5
+        self.octogon_points[6].z = 0.5
 
-        octogon_points[7].x = 0
-        octogon_points[7].y = -0.7
-        octogon_points[7].z = 0.5
+        self.octogon_points[7].x = 0
+        self.octogon_points[7].y = -0.7
+        self.octogon_points[7].z = 0.5
 
     ###############################################
-    # FUNCTIONS: 
+    # FUNCTIONS: create containers linked to the action server.
 
         # SEE USE EXAMPLE HERE: for instance, using concurrent_trajs(args[]):
         # self.fig8_sm = concurrent_trajs(selected_drones = ids, traj_id = 8)
@@ -118,7 +119,7 @@ class polygonial():
                                             my_newAction, goal = my_newGoal(point = traj_waypoint[drone_id], id = drone_id)  )) 
         return figure
 
-    # CONTAINER: SIMULTANEOUS Fo8s # Using all the ids currently running.
+    # CONCURRENT Fo8s CONTAINER # Using all the ids currently running.
     def concurrent_trajs(self, selected_drones, traj_id):
         """FIG8_EXECUTE""" 
         figure = Concurrence(['succeeded', 'aborted', 'preempted'], 'succeeded')
@@ -128,6 +129,96 @@ class polygonial():
                 SimpleActionState('fig8_drone'+str(id),
                                 doTrajAction, goal = doTrajGoal(shape = traj_id, id = drone_id)))
         return figure
+
+    # MONITOR Collisions CONTAINER # Allows for internal_sm
+        # EXAMPLE USE:
+
+    #     StateMachine.add('MOVE_AND_MONITOR',
+    #             move_monitor_cc,
+    #             {'succeeded':'STATE_IF_SUCCEED', 
+    #                             'preempted':'STATE_IF_PREEMPTED'}) 
+
+
+    # monitor_sm = MonitorState('/collision_detection', std_msgs.Bool,
+    #                     cond_cb = lambda ud,msg: not agent_far_away(ud,msg))
+
+    # monitored_trajs(self, selected_drones, traj_id, internal_sm, internal_name = 'MOVE_AGENT1', monitor_sm, monitor_name='MONITOR_COLLISIONS')
+
+
+
+    def monitored_trajs(self, internal_sm, internal_name, monitor_sm, monitor_name):
+        figure = Concurrence(
+                    ['succeeded','aborted','preempted','interrupted'],
+                    'aborted', 
+                    # default state
+                    child_termination_cb = lambda so: True, 
+                    # stop Concurrence if any substates stops
+                    outcome_map = {
+                        'succeeded':{'MOVE_AGENT1':'succeeded'},
+                        'preempted':{'MOVE_AGENT1':'preempted',
+                                            'MONITOR_AGENT1':'invalid'},
+                        'interrupted':{'MONITOR_AGENT1':'invalid'}})
+            
+        with figure:
+            Concurrence.add(internal_name,
+                    internal_sm)
+        
+            Concurrence.add(monitor_name,
+                monitor_sm,)
+
+        return figure
+
+    """OCTOGON"""
+    # OCTOGON CONTAINER # move DRONE 2 (id[1]) along the octogon. Attach a LAND independent from the other drones.
+    def octogon_all_drones(self, selected_drones, waypoint_array, order_array):
+        sm1 = Concurrence(['succeeded', 'aborted', 'preempted'],
+                'succeeded',
+                )
+        with sm1:
+            for drone_id in selected_drones:
+                figure = StateMachine(outcomes=['succeeded','aborted','preempted']) 
+                with figure:
+            
+                    order = [(5, 6, 7, 0, 1, 2, 3, 4),
+                             (3, 4, 5, 6, 7, 0, 1, 2 ),
+                             (1, 2, 3, 4, 5, 6, 7, 0)]
+                    self.octogon_order = order
+                    for i in range(7):
+                        point_for_state = Point()
+                        point_for_state.x = self.octogon_points[self.octogon_order[drone_id-1][i]].x
+                        point_for_state.y = self.octogon_points[self.octogon_order[drone_id-1][i]].y
+                        if i <= 4 :
+                            point_for_state.z = self.octogon_points[self.octogon_order[drone_id-1][i]].z + (i*0.1)
+                        else :
+                            point_for_state.z = self.octogon_points[self.octogon_order[drone_id-1][i]].z - (i*0.1) + 0.8 
+                            
+                        StateMachine.add('DRONE'+str(drone_id)+'-' + str(self.octogon_order[drone_id-1][i]),
+                                            SimpleActionState('drone'+str(drone_id)+'detect_perimeter',
+                                                                my_newAction, goal = my_newGoal(point = point_for_state, id = drone_id)),
+                                            transitions={'succeeded' : 'DRONE'+str(drone_id)+'-' + str(self.octogon_order[i+1]), 
+                                                         'aborted' : 'LAND_DRONE'+str(drone_id), 
+                                                         'preempted' : 'LAND_DRONE'+str(drone_id)})
+
+                    #Set up a continous loop
+                    smach.StateMachine.add('DRONE'+str(drone_id)+'-' + str(self.octogon_order[drone_id-1][-1]),
+                                    SimpleActionState('drone1detect_perimeter',
+                                                        my_newAction, goal = my_newGoal(point = self.octogon_points[self.octogon_order[-1]], id = drone_id)),
+                                    transitions={'succeeded' : 'DRONE1'+str(drone_id)+'-'  + str(self.octogon_order[0]), 
+                                                 'aborted' : 'LAND_DRONE'+str(drone_id), 
+                                                 'preempted' : 'LAND_DRONE'+str(drone_id)})
+
+
+                    #Land Drone If Aborted
+                    smach.StateMachine.add('LAND_DRONE'+str(drone_id)+'',
+                                    SimpleActionState('land_drone'+str(drone_id),
+                                                        my_newAction, goal = my_newGoal(point = self.octogon_points[3], id = drone_id)),
+                                    transitions={'succeeded' : 'LAND_DRONE'+str(drone_id)})
+
+                #add drone's traj in concurrence with other drone trajs.
+                Concurrence.add('DRONE1', figure)
+        return sm1
+
+        # END OF OCTOGON CONTAINER. ######################################################################################
 
 
     #############################################
@@ -150,33 +241,61 @@ class polygonial():
     def compile_sm (self, ids_involved, sm_ref):
 
         sm_ref = StateMachine(outcomes=['succeeded','aborted','preempted'])
-        #progressively add drones
+        
         with sm_ref:
+            
+
+            # move drone 1
+            move_sm1 = self.move_drone(drone_id= self.ids[1], traj_waypoint=self.home_points_fo8[2])
             StateMachine.add('initDrone2-FIG8',
-                            self.moveDrone2,
+                            move_sm1,
                             transitions={'succeeded' : 'initDrone3-FIG8', 
                                             'aborted' : 'land_all', 
                                             'preempted' : 'land_all'})
-
-            self.move_sm = self.move_drone(drone_id= self.ids[2], traj_waypoint=self.home_points_fo8[2])
-
+            # move drone 2
+            move_sm2 = self.move_drone(drone_id= self.ids[2], traj_waypoint=self.home_points_fo8[2])
             StateMachine.add('initDrone3-FIG8',
-                            self.move_sm,
+                            move_sm2,
                             transitions={'succeeded' : 'FIG8_EXECUTE', 
                                             'aborted' : 'land_all', 
                                             'preempted' : 'land_all'})
-
-
-            self.fig8_sm = self.concurrent_trajs(selected_drones = self.ids, traj_id = 8)
-
-            StateMachine.add('FIG8_EXECUTE', self.fig8_sm, transitions={'succeeded' : 'land_all', 
+            # concurrent figures of eight
+            fig8_sm = self.concurrent_trajs(selected_drones = self.ids, traj_id = 8)
+            StateMachine.add('FIG8_EXECUTE', fig8_sm, transitions={'succeeded' : 'land_all', 
                                                                         'aborted' : 'land_all', 
                                                                     'preempted' : 'land_all'})
 
-            """land_all"""        
-            # This gets executed when 'land_all' is called.
-            self.land_sm = self.land_group(selected_drones = self.ids, traj_waypoint = self.home_points_fo8)
-            StateMachine.add('land_all', self.land_sm)
+            # 3 drone octogon
+            octogon_sm = self.octogon_all_drones(selected_drones = self.ids, 
+                                                    waypoint_array= self.octogon_points, 
+                                                    order_array = self.octogon_order)                        
+            StateMachine.add('octogon_all', octogon_sm,
+                                        transitions={'succeeded' : 'FIG8_EXECUTE', 
+                                                     'aborted' : 'land_all', 
+                                                     'preempted' : 'land_all'})
+
+
+            # generalized landing
+            land_sm = self.land_group(selected_drones = self.ids, traj_waypoint = self.home_points_fo8)
+            StateMachine.add('land_all', land_sm)
+
+
+            # monitor an external flag and preempt if detected
+            def agent_far_away(ud, msg):
+                if msg.data == True:
+                    return True
+                return False
+
+            monitor_s = MonitorState('/collision_detection', std_msgs.Bool,
+                                cond_cb = lambda ud,msg: not agent_far_away(ud,msg))
+
+            move_monitor_cc = self.monitored_trajs(internal_sm = octogon_sm, internal_name = 'DRONE_CHORE', monitor_s, monitor_name='MONITOR_COLLISIONS')
+
+            StateMachine.add('MOVE_AND_MONITOR',
+                    move_monitor_cc,
+                    {'succeeded':'land_all', 
+                     'preempted':'land_all'}) 
+
 
         return sm_ref
         
@@ -315,18 +434,17 @@ class polygonial():
         # OCTOGON_3DRONES CONTAINER # Execute Octogon with 3
         #
 
-        def get_pointforstate(i):
+        def get_pointforstate(order, i):
             point_for_state = Point()
-            point_for_state.x = test_point.x
-            point_for_state.y = test_point.y
 
             if i <= 4 :
-                point_for_state.z = test_point.z + (i*0.1)
+                point_for_state.z = octogon_points[order[i]].z + (i*0.1)
             else :
-                point_for_state.z = test_point.z - (i*0.1) + 0.8 
+                point_for_state.z = octogon_points[order[i]].z - (i*0.1) + 0.8 
+
             return point_for_state
 
-
+        # Concurrence of Drones 1 / 2 / 3
         sm1 = Concurrence(['succeeded', 'aborted', 'preempted'],
                 'succeeded',
                 )
@@ -346,7 +464,13 @@ class polygonial():
                 
                 order = (5, 6, 7, 0, 1, 2, 3, 4)
                 for i in range(7):
-                    point_for_state = get_pointforstate(i)
+                    point_for_state.x = self.test_point.x
+                    point_for_state.y = self.test_point.y
+
+                    if i <= 4 :
+                        point_for_state.z = test_point.z + (i*0.1)
+                    else :
+                        point_for_state.z = test_point.z - (i*0.1) + 0.8 
 
                     StateMachine.add('DRONE1-' + str(order[i]),
                                      SimpleActionState('drone1detect_perimeter',
