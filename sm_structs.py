@@ -1,4 +1,35 @@
 #! /usr/bin/env python
+#Code initiated by txa on 20 November 2020
+#Comments added on 27 September 2021
+#Saved under https://github.com/ThomasCarstens/cfScripts/blob/master/ros_action_server.py
+
+# OUT OF CLASS: USAGE #############################################################################
+# sm0 = self.execOctogonAndTrajOnCollision (self.ids)
+# self.start_sm_on_thread(sm0)
+# NOTE: RUNS specified command in packaged state machine.
+
+# WITHIN STATE MACHINE: USAGE #####################################################################
+# 
+# self.fig8_sm = concurrent_trajs(selected_drones = ids, traj_id = 8)
+# StateMachine.add('FIG8_EXECUTE', self.fig8_sm, transitions={'succeeded' : 'land_all', 
+#                                                             'aborted' : 'land_all', 
+#                                                         'preempted' : 'land_all'})
+# NOTE: FUNCTION concurrent_trajs(args[]) readapts actionlib to smach.
+
+# WITHIN FUNCTIONS:                      ########################## ##############################
+
+# def concurrent_trajs(self, selected_drones, traj_id):
+#     """FIG8_EXECUTE""" 
+#     figure = Concurrence(['succeeded', 'aborted', 'preempted'], 'succeeded')
+#     with figure:
+#         for drone_id in selected_drones:
+#             Concurrence.add('FIG8_EXECUTE_drone'+str(id),
+#             SimpleActionState('fig8_drone'+str(id),
+#                             doTrajAction, goal = doTrajGoal(shape = traj_id, id = drone_id)))
+#     return figure
+# NOTE: create containers for the actionlib functions, accessible at 
+# https://github.com/leonard-de-vinci/intelligent-drone-lab/blob/master/ros_ws/src/crazyswarm/scripts/ros_action_server.py
+
 from __future__ import print_function
 from numpy.lib.function_base import select
 import rospy
@@ -19,12 +50,14 @@ import turtlesim.msg
 import turtle_actionlib.msg
 import sys
 
-
 class stateMachineStructs(my_ids):
     def __init__(self, my_ids):
 
+
         self.ids = my_ids
-        #define the differents points
+
+
+        # SECTION 1: define the differents points
         self.test_point= Point()
         self.test_point.x = 0
         self.test_point.y = 0
@@ -93,18 +126,8 @@ class stateMachineStructs(my_ids):
         self.octogon_points[7].y = -0.7
         self.octogon_points[7].z = 0.5
 
-        # OUT OF CLASS: USAGE #############################################################################
-        # sm0 = self.execOctogonAndTrajOnCollision (self.ids)
-        # self.start_sm_on_thread(sm0)
-
     ###############################################
-    # FUNCTIONS: create containers linked to the action server.
-
-        # SEE USE EXAMPLE HERE: for instance, using concurrent_trajs(args[]):
-        # self.fig8_sm = concurrent_trajs(selected_drones = ids, traj_id = 8)
-        # StateMachine.add('FIG8_EXECUTE', self.fig8_sm, transitions={'succeeded' : 'land_all', 
-        #                                                             'aborted' : 'land_all', 
-        #                                                         'preempted' : 'land_all'})
+    # SECTION 2 | FUNCTIONS: create containers for the server functions.
 
     # CONTAINER: MOVE DRONE [id] to waypoint [index]
     def move_drone(self, drone_id, traj_waypoint):
