@@ -50,7 +50,7 @@ import turtlesim.msg
 import turtle_actionlib.msg
 import sys
 
-class stateMachineStructs(my_ids):
+class smlib(my_ids):
     def __init__(self, my_ids):
 
 
@@ -378,7 +378,7 @@ if __name__ == '__main__':
     # t1.start()
     # rospy.spin()
     all_current_ids = [3, 1, 4] # ideally from Parameter Server.
-    incarnationSm = stateMachineStructs(all_current_ids)
+    incarnationSm = smlib(all_current_ids)
 
     # mention the group that gets activated.
     sm0 = incarnationSm.execOctogonAndTrajOnCollision (incarnationSm.ids)

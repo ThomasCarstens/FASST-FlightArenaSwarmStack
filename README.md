@@ -1,19 +1,22 @@
-##### Code initiated by txa on 20 November 2020
-##### Comments added on 27 September 2021
-##### See Thesis
+Code initiated by txa on 20 November 2020
+Comments added on 27 September 2021
+thomaxarstens@gmail.com
 
-### As part of the testbed for service drones, we offer a library of **well-known swarm behaviors**, which is offered open-source to practitioners of the Crazyswarm Project. This is the first collection of ‘swarm patterns’ known to-date on this swarm framework. The library includes:
+As part of the testbed for service drones, we offer a library of **well-known swarm behaviors**, which is offered open-source to practitioners of the Crazyswarm Project. This is the first collection of ‘swarm patterns’ known to-date on this swarm framework. The library includes:
 
 * Encapsulating multi-step tasks
-
-* Encapsulating swarm instructions
-
-* Encapsulating individual task execution
-
-# multi-step tasks
 Multi-step tasks encapsulate the full swarm stack, from single-robot commands to dynamic management.
 
-| oneDrone_ToAndFro (single_id): | execOctogonAndTrajOnCollision (ids_involved): |
+* Encapsulating swarm instructions
+Dynamic swarm tasks are encapsulated within the multi-step tasks.
+
+* Encapsulating individual task execution
+Robot-specific instructions are encapsulated within the swarm instructions.
+
+# multi-step tasks
+The drone ids are selected as an argument.
+
+| smlib.oneDrone_ToAndFro (id) | smlib.execOctogonAndTrajOnCollision (ids) |
 |-- | -- |
 | # move to position 1<br># move to position 2<br># loop<br># generalized landing at abort | # move drone 1<br># move drone 2<br># concurrent figures of eight<br># 3 drone octogon<br># generalized landing<br># monitor an external flag and preempt if detected<br># concurrent helis |
 
@@ -32,8 +35,12 @@ Multi-step tasks encapsulate the full swarm stack, from single-robot commands to
 
 
 # swarm instructions
-Dynamic swarm tasks are encapsulated within the multi-step tasks.
-> Examples: https://github.com/ThomasCarstens/Service_Drones_Thesis/blob/main/sm_structs.py
+| smlib.move_drone(drone_id, traj_waypoint) | smlib.monitor_general(monitor_topic, monitor_type, truth_function) | smlib.land_group(self, selected_drones, traj_waypoint) | smlib.concurrent_trajs(self, selected_drones, traj_id) |
+|-- | -- | -- | -- |
+| MOVE DRONE [id] to waypoint [index] |   | Land all the drones to their respective points | CONCURRENT Fo8s CONTAINER # Using all the ids currently running. |
+
+
+> More Examples: https://github.com/ThomasCarstens/Service_Drones_Thesis/blob/main/sm_structs.py
 ## Usage
 NOTE: FUNCTION concurrent_trajs(args[]) readapts actionlib to smach.
 
@@ -52,8 +59,23 @@ NOTE: FUNCTION concurrent_trajs(args[]) readapts actionlib to smach.
 
 
 # individual task execution
-Robot-specific instructions are encapsulated within the swarm instructions.
-> Code: https://github.com/ThomasCarstens/cfScripts/blob/master/ros_action_server.py
+#trajectory_action ACTION SERVER [name='trajectory_action', drone: self.allcfs.crazyflies[0], variable:'_as2', callback:'drones_fig8_callback']"""
+
+#fig8_ ACTION SERVER [name='fig8_', drone: self.allcfs.crazyflies[0], variable:'fig8', callback:'traj_callback']
+
+        Enter P#meter1 ACTION SERVER [name='detect_perimeter1', drone: goal.id, variable:'_as_cf3_go', callback:'execute_cb_cf3_go']
+
+        Enter P#meter1 ACTION SERVER [name='cf4_go', drone: goal.id, variable:'_as_cf4_go', callback:'execute_cb_cf4_go']
+
+        MAIN WAYPOINT MOVEMENT FUNCTION
+		MOVING cfx (goal.id) TO GOAL goal.point
+		detect_perimeter ACTION SERVER [name='detect_perimeter', drone: cf2, variable:'_as_cf2', callback:'execute_cb_cf2']
+
+		Follow Functionality
+		MOVE DRONE 1 goal.id TO DRONE 2 POSE goal.point (currently cf2)
+        cf3_follow_cf2 ACTION SERVER [name='cf3_follow_cf2', drone: goal.id, variable:'_cf3_follow_cf2', callback:'execute_cb_cf3_follow_cf2']
+
+> More Examples: https://github.com/ThomasCarstens/cfScripts/blob/master/ros_action_server.py
 ## Usage
     SimpleActionState('fig8_drone'+str(id),
                       doTrajAction, 
