@@ -1,21 +1,21 @@
-# Service_Drones_Thesis
-
-## Code initiated by txa on 20 November 2020
-## Comments added on 27 September 2021
-## Saved under https://github.com/ThomasCarstens/cfScripts/blob/master/ros_action_server.py
+Code initiated by txa on 20 November 2020
+Comments added on 27 September 2021
+See Thesis
 
 This repository documents the development process of a testbed for service drones.
 
-* A library to encapsulate multi-step tasks
+* Encapsulate multi-step tasks
 
-* A library to encapsulate swarm instructions
+* Encapsulate swarm instructions
 
-* A library to encapsulate individual task execution
-> https://github.com/ThomasCarstens/cfScripts/blob/master/ros_action_server.py
+* Encapsulate individual task execution
 
 Each of these can be examined in turn.
 
+
 # multi-step tasks
+Multi-step tasks encapsulate the full swarm stack, from single-robot commands to dynamic management.
+> Examples: https://github.com/ThomasCarstens/Service_Drones_Thesis/blob/main/sm_structs.py
 ## Usage
     sm0 = self.execOctogonAndTrajOnCollision (self.ids)
     self.start_sm_on_thread(sm0)
@@ -29,9 +29,10 @@ Each of these can be examined in turn.
 
 # swarm instructions
 Dynamic swarm tasks are encapsulated within the multi-step tasks.
-
+> Examples: https://github.com/ThomasCarstens/Service_Drones_Thesis/blob/main/sm_structs.py
 ## Usage
 NOTE: FUNCTION concurrent_trajs(args[]) readapts actionlib to smach.
+
     concurrent_trajs(selected_drones = ids, traj_id = 8)
 
 ## Development
@@ -48,7 +49,7 @@ NOTE: FUNCTION concurrent_trajs(args[]) readapts actionlib to smach.
 
 # individual task execution
 Robot-specific instructions are encapsulated within the swarm instructions.
-
+> Code: https://github.com/ThomasCarstens/cfScripts/blob/master/ros_action_server.py
 ## Usage
     SimpleActionState('fig8_drone'+str(id),
                       doTrajAction, 
