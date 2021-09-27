@@ -14,18 +14,8 @@
 Multi-step tasks encapsulate the full swarm stack, from single-robot commands to dynamic management.
 |def oneDrone_ToAndFro (self, single_id): |def execOctogonAndTrajOnCollision (self, ids_involved): |
 |-- | -- |
-|       # move to position 1
-        # move to position 2 
-        # loop
-        # generalized landing at abort |        
-        
-        # move drone 1
-        # move drone 2
-        # concurrent figures of eight
-        # 3 drone octogon
-        # generalized landing
-        # monitor an external flag and preempt if detected
-        # concurrent helis |
+| # move to position 1<br># move to position 2<br># loop<br># generalized landing at abort 
+| # move drone 1<br># move drone 2<br># concurrent figures of eight<br># 3 drone octogon<br># generalized landing<br># monitor an external flag and preempt if detected<br># concurrent helis |
 
 
     def oneDrone_ToAndFro (self, single_id):
