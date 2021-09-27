@@ -5,13 +5,16 @@ thomaxarstens@gmail.com
 As part of the testbed for service drones, we offer a library of **well-known swarm behaviors**, which is offered open-source to practitioners of the Crazyswarm Project. This is the first collection of ‘swarm patterns’ known to-date on this swarm framework. The library includes:
 
 * Encapsulating multi-step tasks
-Multi-step tasks encapsulate the full swarm stack, from single-robot commands to dynamic management.
+
+*Multi-step tasks encapsulate the full swarm stack, from single-robot commands to dynamic management.*
 
 * Encapsulating swarm instructions
-Dynamic swarm tasks are encapsulated within the multi-step tasks.
+
+*Dynamic swarm tasks are encapsulated within the multi-step tasks.*
 
 * Encapsulating individual task execution
-Robot-specific instructions are encapsulated within the swarm instructions.
+
+*Robot-specific instructions are encapsulated within the swarm instructions.*
 
 # multi-step tasks
 The drone ids are selected as an argument.
