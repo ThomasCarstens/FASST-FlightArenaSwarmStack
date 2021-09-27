@@ -59,21 +59,10 @@ NOTE: FUNCTION concurrent_trajs(args[]) readapts actionlib to smach.
 
 
 # individual task execution
-#trajectory_action ACTION SERVER [name='trajectory_action', drone: self.allcfs.crazyflies[0], variable:'_as2', callback:'drones_fig8_callback']"""
 
-#fig8_ ACTION SERVER [name='fig8_', drone: self.allcfs.crazyflies[0], variable:'fig8', callback:'traj_callback']
-
-        Enter P#meter1 ACTION SERVER [name='detect_perimeter1', drone: goal.id, variable:'_as_cf3_go', callback:'execute_cb_cf3_go']
-
-        Enter P#meter1 ACTION SERVER [name='cf4_go', drone: goal.id, variable:'_as_cf4_go', callback:'execute_cb_cf4_go']
-
-        MAIN WAYPOINT MOVEMENT FUNCTION
-		MOVING cfx (goal.id) TO GOAL goal.point
-		detect_perimeter ACTION SERVER [name='detect_perimeter', drone: cf2, variable:'_as_cf2', callback:'execute_cb_cf2']
-
-		Follow Functionality
-		MOVE DRONE 1 goal.id TO DRONE 2 POSE goal.point (currently cf2)
-        cf3_follow_cf2 ACTION SERVER [name='cf3_follow_cf2', drone: goal.id, variable:'_cf3_follow_cf2', callback:'execute_cb_cf3_follow_cf2']
+| trajectory_action | fig8_ | detect_perimeter | cf4_go | cf3_follow_cf2 |
+|-- | -- | -- | -- | -- |
+| RUNNING HELI goal.shape on cfx (goal.id) | RUNNING FIG8 goal.shape on cfx (goal.id)   | MOVING cfx (goal.id) TO GOAL goal.point |  | MOVE DRONE 1 goal.id TO DRONE 2 POSE goal.point |
 
 > More Examples: https://github.com/ThomasCarstens/cfScripts/blob/master/ros_action_server.py
 ## Usage
