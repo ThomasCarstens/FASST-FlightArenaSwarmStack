@@ -1,20 +1,24 @@
-Code initiated by txa on 20 November 2020
-Comments added on 27 September 2021
-thomaxarstens@gmail.com
+
 
 As part of the testbed for service drones, we offer a library of **well-known swarm behaviors**, which is offered open-source to practitioners of the Crazyswarm Project. This is the first collection of ‘swarm patterns’ known to-date on this swarm framework. The library includes:
 
-* Encapsulating multi-step tasks
+* **Encapsulating multi-step tasks**
 
-*Multi-step tasks encapsulate the full swarm stack, from single-robot commands to dynamic management.*
+    *Multi-step tasks encapsulate the full swarm stack, from single-robot commands to dynamic management.*
 
-* Encapsulating swarm instructions
+* **Encapsulating swarm instructions**
 
-*Dynamic swarm tasks are encapsulated within the multi-step tasks.*
+    *Dynamic swarm tasks are encapsulated within the multi-step tasks.*
 
-* Encapsulating individual task execution
+* **Encapsulating individual task execution**
 
-*Robot-specific instructions are encapsulated within the swarm instructions.*
+    *Robot-specific instructions are encapsulated within the swarm instructions.*
+
+*Code initiated by txa on 20 November 2020*
+
+*Comments added on 27 September 2021*
+
+*Contact: ThomasCarstens*
 
 # multi-step tasks
 The drone ids are selected as an argument.
@@ -82,4 +86,4 @@ The robot instructions run as callbacks on the server side.
             drone.goTo(self.waypoint, yaw=0, duration=3.0)
 
 These robot instructions are encapsulated within a server callback.
-They execute with a feedback and a result component.
+The server informs the execution with **feedback** and **result** data.
