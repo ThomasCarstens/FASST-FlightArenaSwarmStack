@@ -389,3 +389,64 @@ if __name__ == '__main__':
 
     incarnationSm.start_sm_on_thread(sm0)
 
+
+
+def drones_fig8_callback(self, goal):
+		#"""MOVES DRONE self.allcfs.crazyflies[0] TO Spiral Trajectory
+        #trajectory_action ACTION SERVER [name='trajectory_action', drone: self.allcfs.crazyflies[0], variable:'_as_cf2', callback:'traj_callback']"""
+        self.initial_pose = Point()
+        self.initial_pose2 = Point()
+
+        speak (engine, "fig8 trajectory.")
+       # helper variables
+        #r = rospy.Rate(10)
+        self.PoseListener()
+        for cf in self.allcfs.crazyflies:
+            if cf.id == goal.id:
+                self.initial_pose.x = cf.position()[0]
+                self.initial_pose.y = cf.position()[1]
+                self.initial_pose.z = cf.position()[2]
+
+        #rospy.wait_for_message('/tf', tf2_msgs.msg.TFMessage, timeout=None)
+
+		#"""HELPER VARIABLES FOR THE ACTION SERVER INSTANCE"""
+        # append the seeds for the fibonacci sequence
+        self._feedbackfig8.time_elapsed = Duration(5)
+        self.success == False
+
+		#"""CODE TO FOLLOW A TRAJECTORY"""
+        TRIALS = 1
+        TIMESCALE = 1
+        for cf in self.allcfs.crazyflies:
+            if cf.id == goal.id :
+                if self.arm == True:
+                    cf.takeoff(targetHeight=0.6, duration=3.0)
+                    cf.uploadTrajectory(0, 0, self.fig8)
+                    cf.startTrajectory(0, timescale=TIMESCALE)
+                    rospy.sleep(10)
+
+
+        while self.success == False:
+            #value = os.system("rosrun crazyflie_tools battery --uri=radio://0/100/2M/E7E7E7E701") #read a string???
+            #self._feedbackfig8.voltage = String(value)
+            print ("Not yet...")
+            self.takeoff_transition(goal.id, self.initial_pose)
+
+            if self._asfig8.is_preempt_requested():
+                rospy.loginfo('%s: Preempted' % self._action_name_fig8)
+                self._asfig8.set_preempted()
+                for cf in self.allcfs.crazyflies:
+                    if cf.id == goal.id or cf.id == goal.shape:
+                        print("LANDING cf...", goal.id)
+                        cf.land(0.04, 2.5)
+                break
+
+
+        while self.success == True:
+            print("Reached the perimeter!!")
+            self.success = False
+            self._resultfig8.time_elapsed = Duration(5)
+            self._resultfig8.updates_n = 1
+            rospy.loginfo('My feedback: %s' % self._feedbackfig8)
+            rospy.loginfo('%s: Succeeded' % self._action_name_fig8)
+            self._asfig8.set_succeeded(self._result2)
