@@ -20,6 +20,8 @@ As part of the testbed for service drones, we offer a library of **well-known sw
 
 *Contact: ThomasCarstens*
 
+![System Overview of Ground Station](/some_swarm_github.png "Swarm Diagram")
+
 # multi-step tasks
 The drone ids are selected as an argument.
 
