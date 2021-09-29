@@ -1,5 +1,6 @@
 
-#Chapters
 
+# System Overview of Ground Station
 
-https://youtu.be/wn5rsQ-XPBA
+![System Overview of Ground Station](/some_swarm_github.png "Swarm Diagram")
+
