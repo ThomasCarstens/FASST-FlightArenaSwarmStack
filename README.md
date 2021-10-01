@@ -16,7 +16,7 @@ As part of the testbed for service drones, we offer a library of **well-known sw
     *Robot-specific instructions are encapsulated within the swarm instructions.*
 
 
-# multi-step tasks
+# multi-step applications
 The drone ids are selected as an argument.
 
 | smlib.oneDrone_ToAndFro (id) | smlib.execOctogonAndTrajOnCollision (ids) |
@@ -38,9 +38,11 @@ The drone ids are selected as an argument.
 
 
 # swarm instructions
-| smlib.move_drone(drone_id, traj_waypoint) | smlib.monitor_general(monitor_topic, monitor_type, truth_function) | smlib.land_group(self, selected_drones, traj_waypoint) | smlib.concurrent_trajs(self, selected_drones, traj_id) |
-|-- | -- | -- | -- |
-| MOVE DRONE [id] to waypoint [index] |   | Land all the drones to their respective points | CONCURRENT Fo8s CONTAINER # Using all the ids currently running. |
+
+| MOVE DRONE TO POINT | SETUP TOPIC MONITOR | LAND GROUP | CONCURRENT SHAPES | FLY OCTOGON WITH GROUP | SETUP CONCURRENCE WITH MONITOR | 
+|-- | -- | -- | -- | -- | -- | 
+| smlib.move_drone(drone_id, traj_waypoint) | smlib.monitor_general(monitor_topic, monitor_type, truth_function) | smlib.land_group(self, selected_drones, traj_waypoint) | smlib.concurrent_trajs(self, selected_drones, traj_id) | octogon_all_drones(self, selected_drones, waypoint_array, order_array) | monitored_trajs(self, internal_sm, internal_name, monitor_sm, monitor_name) | 
+| MOVE DRONE [id] to waypoint [index] |   | Land all the drones to their respective points | CONCURRENT Fo8s CONTAINER # Using all the ids currently running. | | |
 
 
 
@@ -64,9 +66,6 @@ NOTE: FUNCTION concurrent_trajs(args[]) readapts actionlib to smach.
 
 # individual task execution
 
-| trajectory_action | fig8_ | detect_perimeter | cf4_go | cf3_follow_cf2 |
-|-- | -- | -- | -- | -- |
-| RUNNING HELI goal.shape on cfx (goal.id) | RUNNING FIG8 goal.shape on cfx (goal.id)   | MOVING cfx (goal.id) TO GOAL goal.point |  | MOVE DRONE 1 goal.id TO DRONE 2 POSE goal.point |
 
 | PREDEFINED TRAJECTORY | LAND ((AND CONFIRM IF ALIVE)) | FLY TO WAYPOINT | FOLLOW-ME | RANDOM WALK |
 |-- | -- | -- | -- | -- |
