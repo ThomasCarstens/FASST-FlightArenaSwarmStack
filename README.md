@@ -1,4 +1,5 @@
 
+| Code initiated by txa on 20 November 2020 | Comments added on 27 September 2021 | Contact: ThomasCarstens |
 
 As part of the testbed for service drones, we offer a library of **well-known swarm behaviors**, which is offered open-source to practitioners of the Crazyswarm Project. This is the first collection of ‘swarm patterns’ known to-date on this swarm framework. The library includes:
 
@@ -14,13 +15,6 @@ As part of the testbed for service drones, we offer a library of **well-known sw
 
     *Robot-specific instructions are encapsulated within the swarm instructions.*
 
-*Code initiated by txa on 20 November 2020*
-
-*Comments added on 27 September 2021*
-
-*Contact: ThomasCarstens*
-
-![System Overview of Ground Station](/some_swarm_github.png "Swarm Diagram")
 
 # multi-step tasks
 The drone ids are selected as an argument.
