@@ -21,7 +21,7 @@ The drone ids are selected as an argument.
 
 | smlib.oneDrone_ToAndFro (id) | smlib.execOctogonAndTrajOnCollision (ids) |
 |-- | -- |
-| # move to position 1<br># move to position 2<br># loop<br># generalized landing at abort | # move drone 1<br># move drone 2<br># concurrent figures of eight<br># 3 drone octogon<br># generalized landing<br># monitor an external flag and preempt if detected<br># concurrent helis |
+| # move to position 1<br># move to position 2<br># loop<br># generalized landing at abort | # move drone 1<br># move drone 2<br># concurrent figures of eight<br># 3 drone octogon<br># generalized landing<br># monitor for unity flag<br># concurrent helis |
 
 > More Examples: https://github.com/ThomasCarstens/Service_Drones_Thesis/blob/main/sm_structs.py
 
@@ -41,6 +41,7 @@ The drone ids are selected as an argument.
 | smlib.move_drone(drone_id, traj_waypoint) | smlib.monitor_general(monitor_topic, monitor_type, truth_function) | smlib.land_group(self, selected_drones, traj_waypoint) | smlib.concurrent_trajs(self, selected_drones, traj_id) |
 |-- | -- | -- | -- |
 | MOVE DRONE [id] to waypoint [index] |   | Land all the drones to their respective points | CONCURRENT Fo8s CONTAINER # Using all the ids currently running. |
+
 
 
 > More Examples: https://github.com/ThomasCarstens/Service_Drones_Thesis/blob/main/sm_structs.py
@@ -66,6 +67,12 @@ NOTE: FUNCTION concurrent_trajs(args[]) readapts actionlib to smach.
 | trajectory_action | fig8_ | detect_perimeter | cf4_go | cf3_follow_cf2 |
 |-- | -- | -- | -- | -- |
 | RUNNING HELI goal.shape on cfx (goal.id) | RUNNING FIG8 goal.shape on cfx (goal.id)   | MOVING cfx (goal.id) TO GOAL goal.point |  | MOVE DRONE 1 goal.id TO DRONE 2 POSE goal.point |
+
+| PREDEFINED TRAJECTORY | LAND ((AND CONFIRM IF ALIVE)) | FLY TO WAYPOINT | FOLLOW-ME | RANDOM WALK |
+|-- | -- | -- | -- | -- |
+| trajectory_action | land_   | detect_perimeter | cf3_follow_cf2 | random_walk |
+| DRONE [goal.id] executes TRAJ [goal.shape] - query arrival at 200Hz | MOVE DRONE [goal.id] down   | MOVE DRONE [goal.id] to Point [goal.point] - query arrival at 200Hz | MOVE DRONE [goal.id] to Point [goal.point] (currently cf2)  | MOVE DRONE [goal.id] to Point [goal.point] (currently random) |
+
 
 > More Examples: https://github.com/ThomasCarstens/cfScripts/blob/master/ros_action_server.py
 ## Usage
