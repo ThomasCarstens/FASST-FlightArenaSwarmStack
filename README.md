@@ -18,7 +18,7 @@ As part of the testbed for service drones, we offer a library of **well-known sw
 
 
 # multi-step applications
-The drone ids are selected as an argument.
+Multi-step applications bring together the tasks defined in lower levels.
 
 | TO-AND-FRO LOOP | DRONES & MIXED REALITY DEMO |
 |-- | -- |
@@ -29,43 +29,20 @@ The drone ids are selected as an argument.
 
 
 ## Usage
-    sm0 = self.execOctogonAndTrajOnCollision (self.ids)
-    self.start_sm_on_thread(sm0)
+Each state machine can be executed on a separate thread.
+    sm0 = smlib.execOctogonAndTrajOnCollision (ids = [1, 2, 4])
+    smlib.start_sm_on_thread(sm0)
 
 ## Development
-    self.fig8_sm = concurrent_trajs(selected_drones = ids, traj_id = 8)
-    StateMachine.add('FIG8_EXECUTE', self.fig8_sm, transitions={'succeeded' : 'land_all', 
+A state machine like the one above would be composed of different States. For instance:
+
+    smach.StateMachine.add('FIG8_EXECUTE', fig8_sm, transitions={'succeeded' : 'land_all', 
                                                                 'aborted' : 'land_all', 
                                                             'preempted' : 'land_all'}) 
+    #the smach library is a procedural task-based framework for python
+    # in this case, fig8_sm is a swarm instruction. This is covered in the next section.
 
-
-# individual task execution
-
-
-| PREDEFINED TRAJECTORY | LAND (AND CONFIRM IF ALIVE) | FLY TO WAYPOINT | FOLLOW-ME | RANDOM WALK |
-|-- | -- | -- | -- | -- |
-| trajectory_action | land_   | detect_perimeter | cf3_follow_cf2 | random_walk |
-| DRONE [goal.id] executes TRAJ [goal.shape] - query arrival at 200Hz | MOVE DRONE [goal.id] down   | MOVE DRONE [goal.id] to Point [goal.point] - query arrival at 200Hz | MOVE DRONE [goal.id] to Point [goal.point] (currently cf2)  | MOVE DRONE [goal.id] to Point [goal.point] (currently random) |
-
-
-> More Examples: https://github.com/ThomasCarstens/cfScripts/blob/master/ros_action_server.py
-## Usage
-    SimpleActionState('fig8_drone'+str(id),
-                      doTrajAction, 
-                      goal = doTrajGoal(shape = traj_id, id = drone_id)))
-
-## Development
-The robot instructions run as callbacks on the server side. 
-
-    for drone in self.allcfs.crazyflies:                              
-        if drone.id == goal.id: #id is a goal argument
-            drone.takeoff(targetHeight=0.6, duration=3.0)
-            drone.goTo(self.waypoint, yaw=0, duration=3.0)
-
-These robot instructions are encapsulated within a server callback.
-The server informs the execution with **feedback** and **result** data.
-
-
+> SMACH DOCS TO READ
 
 # swarm instructions
 
@@ -78,11 +55,14 @@ The server informs the execution with **feedback** and **result** data.
 
 > More Examples: https://github.com/ThomasCarstens/Service_Drones_Thesis/blob/main/sm_structs.py
 ## Usage
-NOTE: FUNCTION concurrent_trajs(args[]) readapts actionlib to smach.
+Our API packages swarm instructions, ie. commands with their own internal task management.
 
-    concurrent_trajs(selected_drones = ids, traj_id = 8)
+    fig8_sm = concurrent_trajs(selected_drones = [1, 2, 4], traj_id = 8)
+    # where concurrent_trajs(...) is defined below.
 
 ## Development
+Note how concurrent_trajs(...) returns a particular State of States. 
+
     def concurrent_trajs(self, selected_drones, traj_id):
         """FIG8_EXECUTE""" 
         figure = Concurrence(['succeeded', 'aborted', 'preempted'], 'succeeded')
@@ -92,6 +72,37 @@ NOTE: FUNCTION concurrent_trajs(args[]) readapts actionlib to smach.
                 SimpleActionState('fig8_drone'+str(id),
                                 doTrajAction, goal = doTrajGoal(shape = traj_id, id = drone_id)))
         return figure
+
+
+# individual task execution
+
+
+| PREDEFINED TRAJECTORY | LAND (AND CONFIRM IF ALIVE) | FLY TO WAYPOINT | FOLLOW-ME | RANDOM WALK |
+|-- | -- | -- | -- | -- |
+| trajectory_action | land_   | detect_perimeter | cf3_follow_cf2 | random_walk |
+| DRONE [goal.id] executes TRAJ [goal.shape] - query arrival at 200Hz | MOVE DRONE [goal.id] down   | MOVE DRONE [goal.id] to Point [goal.point] - query arrival at 200Hz | MOVE DRONE [goal.id] to Point [goal.point] (currently cf2)  | MOVE DRONE [goal.id] to Point [goal.point] (currently random) |
+
+> More Examples: https://github.com/ThomasCarstens/cfScripts/blob/master/ros_action_server.py
+
+## Usage
+Within a particular swarm instruction, come calls to perform tasks. The python actionlib library references an instruction (here 'fig8_drone1', 'fig8_drone2'... and it is conveniently wrapped into a SimpleActionState to interface with the smach library.
+
+    SimpleActionState('fig8_drone'+str(id),
+                      doTrajAction, 
+                      goal = doTrajGoal(shape = traj_id, id = drone_id)))
+
+## Development
+SimpleActionState communicates the task to the ROS Action Server, which performs the robot instructions. This allows for a truly asynchronous management of tasks, thus the execution of tasks remains separate.
+
+    for drone in self.allcfs.crazyflies:                              
+        if drone.id == goal.id: #id is a goal argument
+            drone.takeoff(targetHeight=0.6, duration=3.0)
+            drone.goTo(self.waypoint, yaw=0, duration=3.0)
+
+These robot instructions are encapsulated within a server callback.
+The server informs the execution with **feedback** and **result** data.
+
+
 
 # getting started
 
