@@ -17,40 +17,6 @@ As part of the testbed for service drones, we offer a library of **well-known sw
 | -- | -- | -- | -- |
 
 
-/!\ The Crazyswarm repository needs to be set up.
-> https://crazyswarm.readthedocs.io/en/latest/
-This folder is (currently) unable to launch a demo.
-
-    cd crazyswarm/ros_ws/src/crazyswarm/launch
-    #launch an independent core for ROS
-    roscore
-    #set up the swarm server and dependables
-    roslaunch crazyswarm hover_swarm.launch
-    #launch the action server and dependables
-    roslaunch 3_drones.launch
-    #now you can launch your user code
-    python individual_hover.py
-
-Here are the different elements in this API.
-
-Here are the different elements in this API.
-# getting started
-
-/!\ The Crazyswarm repository needs to be set up.
-> https://crazyswarm.readthedocs.io/en/latest/
-This folder is (currently) unable to launch a demo.
-
-    cd crazyswarm/ros_ws/src/crazyswarm/launch
-    #launch an independent core for ROS
-    roscore
-    #set up the swarm server and dependables
-    roslaunch crazyswarm hover_swarm.launch
-    #launch the action server and dependables
-    roslaunch 3_drones.launch
-    #now you can launch your user code
-    python individual_hover.py
-
-Here are the different elements in this API.
 # multi-step applications
 The drone ids are selected as an argument.
 
