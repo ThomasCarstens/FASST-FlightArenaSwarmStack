@@ -1,5 +1,6 @@
 
 | Code initiated by txa on 20 November 2020 | Comments added on 27 September 2021 | Contact: ThomasCarstens |
+|-- | -- | -- |
 
 As part of the testbed for service drones, we offer a library of **well-known swarm behaviors**, which is offered open-source to practitioners of the Crazyswarm Project. This is the first collection of ‘swarm patterns’ known to-date on this swarm framework. The library includes:
 
@@ -19,9 +20,10 @@ As part of the testbed for service drones, we offer a library of **well-known sw
 # multi-step applications
 The drone ids are selected as an argument.
 
-| smlib.oneDrone_ToAndFro (id) | smlib.execOctogonAndTrajOnCollision (ids) |
+| TO-AND-FRO LOOP | DRONES & MIXED REALITY DEMO |
 |-- | -- |
-| # move to position 1<br># move to position 2<br># loop<br># generalized landing at abort | # move drone 1<br># move drone 2<br># concurrent figures of eight<br># 3 drone octogon<br># generalized landing<br># monitor for unity flag<br># concurrent helis |
+| smlib.oneDrone_ToAndFro (id) | smlib.execOctogonAndTrajOnCollision (ids) |
+| # move to position 1<br># move to position 2<br># and loop<br># land if abort | # position drone 1<br># position drone 2<br># concurrent figures of eight<br># 3 drone octogon<br># generalized landing<br># if Unity3D flag appears:<br># if so, concurrent helis |
 
 > More Examples: https://github.com/ThomasCarstens/Service_Drones_Thesis/blob/main/sm_structs.py
 
@@ -35,6 +37,34 @@ The drone ids are selected as an argument.
     StateMachine.add('FIG8_EXECUTE', self.fig8_sm, transitions={'succeeded' : 'land_all', 
                                                                 'aborted' : 'land_all', 
                                                             'preempted' : 'land_all'}) 
+
+
+# individual task execution
+
+
+| PREDEFINED TRAJECTORY | LAND (AND CONFIRM IF ALIVE) | FLY TO WAYPOINT | FOLLOW-ME | RANDOM WALK |
+|-- | -- | -- | -- | -- |
+| trajectory_action | land_   | detect_perimeter | cf3_follow_cf2 | random_walk |
+| DRONE [goal.id] executes TRAJ [goal.shape] - query arrival at 200Hz | MOVE DRONE [goal.id] down   | MOVE DRONE [goal.id] to Point [goal.point] - query arrival at 200Hz | MOVE DRONE [goal.id] to Point [goal.point] (currently cf2)  | MOVE DRONE [goal.id] to Point [goal.point] (currently random) |
+
+
+> More Examples: https://github.com/ThomasCarstens/cfScripts/blob/master/ros_action_server.py
+## Usage
+    SimpleActionState('fig8_drone'+str(id),
+                      doTrajAction, 
+                      goal = doTrajGoal(shape = traj_id, id = drone_id)))
+
+## Development
+The robot instructions run as callbacks on the server side. 
+
+    for drone in self.allcfs.crazyflies:                              
+        if drone.id == goal.id: #id is a goal argument
+            drone.takeoff(targetHeight=0.6, duration=3.0)
+            drone.goTo(self.waypoint, yaw=0, duration=3.0)
+
+These robot instructions are encapsulated within a server callback.
+The server informs the execution with **feedback** and **result** data.
+
 
 
 # swarm instructions
@@ -64,28 +94,4 @@ NOTE: FUNCTION concurrent_trajs(args[]) readapts actionlib to smach.
         return figure
 
 
-# individual task execution
 
-
-| PREDEFINED TRAJECTORY | LAND ((AND CONFIRM IF ALIVE)) | FLY TO WAYPOINT | FOLLOW-ME | RANDOM WALK |
-|-- | -- | -- | -- | -- |
-| trajectory_action | land_   | detect_perimeter | cf3_follow_cf2 | random_walk |
-| DRONE [goal.id] executes TRAJ [goal.shape] - query arrival at 200Hz | MOVE DRONE [goal.id] down   | MOVE DRONE [goal.id] to Point [goal.point] - query arrival at 200Hz | MOVE DRONE [goal.id] to Point [goal.point] (currently cf2)  | MOVE DRONE [goal.id] to Point [goal.point] (currently random) |
-
-
-> More Examples: https://github.com/ThomasCarstens/cfScripts/blob/master/ros_action_server.py
-## Usage
-    SimpleActionState('fig8_drone'+str(id),
-                      doTrajAction, 
-                      goal = doTrajGoal(shape = traj_id, id = drone_id)))
-
-## Development
-The robot instructions run as callbacks on the server side. 
-
-    for drone in self.allcfs.crazyflies:                              
-        if drone.id == goal.id: #id is a goal argument
-            drone.takeoff(targetHeight=0.6, duration=3.0)
-            drone.goTo(self.waypoint, yaw=0, duration=3.0)
-
-These robot instructions are encapsulated within a server callback.
-The server informs the execution with **feedback** and **result** data.
