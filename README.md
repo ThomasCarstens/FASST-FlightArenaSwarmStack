@@ -1,7 +1,4 @@
 
-| Code initiated by txa on 20 November 2020 | Comments added on 27 September 2021 | Contact: ThomasCarstens |
-|-- | -- | -- |
-
 As part of the testbed for service drones, we offer a library of **well-known swarm behaviors**, which is offered open-source to practitioners of the Crazyswarm Project. This is the first collection of ‘swarm patterns’ known to-date on this swarm framework. The library includes:
 
 * **Encapsulating multi-step tasks**
@@ -16,7 +13,44 @@ As part of the testbed for service drones, we offer a library of **well-known sw
 
     *Robot-specific instructions are encapsulated within the swarm instructions.*
 
+| Code initiated on 20 November 2020 | Restructured API on 27 September 2021 | Quickstart at bottom | Contact: ThomasCarstens |
+| -- | -- | -- | -- |
 
+
+/!\ The Crazyswarm repository needs to be set up.
+> https://crazyswarm.readthedocs.io/en/latest/
+This folder is (currently) unable to launch a demo.
+
+    cd crazyswarm/ros_ws/src/crazyswarm/launch
+    #launch an independent core for ROS
+    roscore
+    #set up the swarm server and dependables
+    roslaunch crazyswarm hover_swarm.launch
+    #launch the action server and dependables
+    roslaunch 3_drones.launch
+    #now you can launch your user code
+    python individual_hover.py
+
+Here are the different elements in this API.
+
+Here are the different elements in this API.
+# getting started
+
+/!\ The Crazyswarm repository needs to be set up.
+> https://crazyswarm.readthedocs.io/en/latest/
+This folder is (currently) unable to launch a demo.
+
+    cd crazyswarm/ros_ws/src/crazyswarm/launch
+    #launch an independent core for ROS
+    roscore
+    #set up the swarm server and dependables
+    roslaunch crazyswarm hover_swarm.launch
+    #launch the action server and dependables
+    roslaunch 3_drones.launch
+    #now you can launch your user code
+    python individual_hover.py
+
+Here are the different elements in this API.
 # multi-step applications
 The drone ids are selected as an argument.
 
@@ -93,5 +127,20 @@ NOTE: FUNCTION concurrent_trajs(args[]) readapts actionlib to smach.
                                 doTrajAction, goal = doTrajGoal(shape = traj_id, id = drone_id)))
         return figure
 
+# getting started
 
+/!\ The Crazyswarm repository needs to be set up.
+> https://crazyswarm.readthedocs.io/en/latest/
+This is necessary to create the python bindings to interact with the drones from the Groundstation.
+
+    cd crazyswarm/ros_ws/src/crazyswarm/launch
+    #launch an independent core for ROS
+    roscore
+    python crazyswarm/ros_ws/src/crazyswarm/scripts/chooser.py
+    #set up the swarm server and dependables
+    roslaunch crazyswarm hover_swarm.launch
+    #launch the action server and dependables
+    roslaunch 3_drones.launch
+    #now you can launch your user code
+    python individual_hover.py# getting started
 
