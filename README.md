@@ -22,7 +22,7 @@ Multi-step applications bring together the tasks defined in lower levels.
 
 | TO-AND-FRO LOOP | DRONES & MIXED REALITY DEMO |
 |-- | -- |
-| smlib.oneDrone_ToAndFro (id) | smlib.execOctogonAndTrajOnCollision (ids) |
+| smlib.oneDrone_ToAndFro (id: _int32 drone reference_) | smlib.execOctogonAndTrajOnCollision (ids: _int32[] drone references_) |
 | # move to position 1<br># move to position 2<br># and loop<br># land if abort | # position drone 1<br># position drone 2<br># concurrent figures of eight<br># 3 drone octogon<br># generalized landing<br># if Unity3D flag appears:<br># if so, concurrent helis |
 
 > More Examples: https://github.com/ThomasCarstens/Service_Drones_Thesis/blob/main/sm_structs.py
@@ -48,7 +48,7 @@ A state machine like the one above would be composed of different States. For in
 
 | MOVE DRONE TO POINT | SETUP TOPIC MONITOR | LAND GROUP | CONCURRENT SHAPES | FLY OCTOGON WITH GROUP | SETUP CONCURRENCE WITH MONITOR | 
 |-- | -- | -- | -- | -- | -- | 
-| smlib.move_drone(drone_id, traj_waypoint) | smlib.monitor_general(monitor_topic, monitor_type, truth_function) | smlib.land_group(self, selected_drones, traj_waypoint) | smlib.concurrent_trajs(self, selected_drones, traj_id) | octogon_all_drones(self, selected_drones, waypoint_array, order_array) | monitored_trajs(self, internal_sm, internal_name, monitor_sm, monitor_name) | 
+| smlib.move_drone(drone_id, traj_waypoint) | smlib.monitor_general(monitor_topic, monitor_type, truth_function) | smlib.land_group(selected_drones, traj_waypoint) | smlib.concurrent_trajs(selected_drones, traj_id) | octogon_all_drones(selected_drones, waypoint_array, order_array) | monitored_trajs(internal_sm, internal_name, monitor_sm, monitor_name) | 
 | MOVE DRONE [id] to waypoint [index] |   | Land all the drones to their respective points | CONCURRENT Fo8s CONTAINER # Using all the ids currently running. | | |
 
 
