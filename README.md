@@ -49,7 +49,7 @@ A state machine like the one above would be composed of different States. For in
 
 | MOVE DRONE TO POINT | SETUP TOPIC MONITOR | LAND GROUP | CONCURRENT SHAPES | FLY OCTOGON WITH GROUP | SETUP CONCURRENCE WITH MONITOR | 
 |-- | -- | -- | -- | -- | -- | 
-|![Application: to and fro](/action_server/go_home.png "To and Fro") | | | | | |
+|![Application: to and fro](/action_server/go_home.png "To and Fro") | ![Application: to and fro](/action_server/traj_selector.png "To and Fro") | | | | |
 | smlib.move_drone(drone_id, traj_waypoint) | smlib.monitor_general(monitor_topic, monitor_type, truth_function) | smlib.land_group(selected_drones, traj_waypoint) | smlib.concurrent_trajs(selected_drones, traj_id) | octogon_all_drones(selected_drones, waypoint_array, order_array) | monitored_trajs(internal_sm, internal_name, monitor_sm, monitor_name) | 
 | MOVE DRONE [id] to waypoint [index] |   | Land all the drones to their respective points | CONCURRENT Fo8s CONTAINER # Using all the ids currently running. | | |
 
