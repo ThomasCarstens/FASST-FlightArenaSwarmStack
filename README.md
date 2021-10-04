@@ -22,6 +22,8 @@ Multi-step applications bring together the tasks defined in lower levels.
 
 | TO-AND-FRO LOOP | DRONES & MIXED REALITY DEMO |
 |-- | -- |
+|![Application: to and fro](/to_and_fro/to_and_fro.png "To and Fro") | |
+
 | smlib.oneDrone_ToAndFro (id: _int32 drone reference_) | smlib.execOctogonAndTrajOnCollision (ids: _int32[] drone references_) |
 | # move to position 1<br># move to position 2<br># and loop<br># land if abort | # position drone 1<br># position drone 2<br># concurrent figures of eight<br># 3 drone octogon<br># generalized landing<br># if Unity3D flag appears:<br># if so, concurrent helis |
 
