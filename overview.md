@@ -69,3 +69,36 @@ Consider a three-step process: (1) Monitoring the agent. (2) If a condition is m
 \end{minted}
 \captionof{minted}{\textbf{Template 2:} Example of Action Interruption. An example of interruption occurs when a drone reacts when another drone gets “too close”.}
 
+\begin{marginfigure}%
+  \includegraphics[width=4cm]{images/testbed/microservice/server.png}
+  \caption{An Action \textbf{Preemption} is executed in the Server-side State Machine.}
+  \label{fig:marginfig}
+\end{marginfigure} 
+-----------------------------------------------------------------------------------------------------------
+
+
+\begin{marginfigure}%
+  \includegraphics[width=4cm]{images/testbed/microservice/client.png}
+  \caption{An Action \textbf{Concurrence} is executed on the Client side.}
+  \label{fig:marginfig}
+\end{marginfigure}
+
+
+    fig8_sm = Concurrence(['succeeded', 'aborted', 'preempted'], 
+                                                        'succeeded')
+    
+    StateMachine.add('FIG8_EXECUTE', fig8_sm, 
+    transitions={'succeeded' : 'moveTo-2', 'aborted' : 'land_all', 
+                                            'preempted' : 'land_all'})
+    with fig8_sm:
+        Concurrence.add('FIG8_EXECUTE_agent1',
+        SimpleActionState('fig8_drone2', doTrajAction, 
+                                goal = doTrajGoal(shape = 8, id = 1)))
+
+        Concurrence.add('FIG8_EXECUTE_agent2',
+        SimpleActionState('fig8_drone3', doTrajAction, 
+                                goal = doTrajGoal(shape = 8, id = 2)))
+
+   \captionof{minted}{\textbf{Template 3:} Example of Action Concurrence. Two ROS Actions are requested from the Action Server, which has been designed to execute two actions in parallel. Line 4 relates this state to next states, in this instance by executing state 'moveTo-2' upon success.}
+
+
