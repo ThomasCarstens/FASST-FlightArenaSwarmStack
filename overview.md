@@ -17,9 +17,11 @@
     
     #Once the condition is True: Transition State Machine
     self.actionServerInstance.set_succeeded() 
-%\caption{Example of Action Concurrence Code.}
+
 \captionof{minted}{\textbf{Template 1:} Example of Premption. This sets the result of the action to 'preempted' after which next states can return to the action at a later point.}
+
 -----------------------------------------------------------------------------------------------------------
+
 \textbf{Interruption} — is a process that tells the computer to stop running the current program so that a new one can be started or a circuit that carries such a signal. 
 
 \begin{marginfigure}%
@@ -65,6 +67,5 @@ Consider a three-step process: (1) Monitoring the agent. (2) If a condition is m
                                 
 
 \end{minted}
-%\caption{Example of Action Concurrence Code.}
 \captionof{minted}{\textbf{Template 2:} Example of Action Interruption. An example of interruption occurs when a drone reacts when another drone gets “too close”.}
 
