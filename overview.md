@@ -69,15 +69,15 @@ Consider a three-step process: (1) Monitoring the agent. (2) If a condition is m
 \end{minted}
 \captionof{minted}{\textbf{Template 2:} Example of Action Interruption. An example of interruption occurs when a drone reacts when another drone gets “too close”.}
 
-\begin{marginfigure}%
+\begin{marginfigure}
   \includegraphics[width=4cm]{images/testbed/microservice/server.png}
   \caption{An Action \textbf{Preemption} is executed in the Server-side State Machine.}
   \label{fig:marginfig}
 \end{marginfigure} 
+
 -----------------------------------------------------------------------------------------------------------
 
-
-\begin{marginfigure}%
+\begin{marginfigure}
   \includegraphics[width=4cm]{images/testbed/microservice/client.png}
   \caption{An Action \textbf{Concurrence} is executed on the Client side.}
   \label{fig:marginfig}
