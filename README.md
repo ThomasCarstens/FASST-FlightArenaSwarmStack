@@ -1,20 +1,22 @@
 
-As part of the testbed for service drones, we offer a library of **well-known swarm behaviors**, which is offered open-source to practitioners of the Crazyswarm Project. This is the first collection of ‘swarm patterns’ known to-date on this swarm framework. The library includes:
+As part of the testbed for service drones, we offer a library of **well-known swarm behaviors**. This is the first collection of ‘swarm patterns’ known to-date on this swarm framework. The library is built with ROS 1 upon the Crazyswarm open-source project. 
 
-* **Encapsulating multi-step tasks**
+1. Encapsulating multi-step tasks.
 
     *Multi-step tasks encapsulate the full swarm stack, from single-robot commands to dynamic management.*
 
-* **Encapsulating swarm instructions**
+2. Encapsulating swarm instructions.
 
     *Dynamic swarm tasks are encapsulated within the multi-step tasks.*
 
-* **Encapsulating individual task execution**
+3. Encapsulating individual task execution.
 
     *Robot-specific instructions are encapsulated within the swarm instructions.*
 
 | Code initiated on 20 November 2020 | Restructured API on 27 September 2021 | Quickstart at bottom | Contact: ThomasCarstens |
 | -- | -- | -- | -- |
+
+
 
 
 # multi-step applications
@@ -28,7 +30,7 @@ Multi-step applications bring together the tasks defined in lower levels.
 
 > More Examples: https://github.com/ThomasCarstens/Service_Drones_Thesis/blob/main/sm_structs.py
 
-
+<!-- 
 ## Usage
 Each state machine can be executed on a separate thread.
     sm0 = smlib.execOctogonAndTrajOnCollision (ids = [1, 2, 4])
@@ -43,7 +45,7 @@ A state machine like the one above would be composed of different States. For in
     #the smach library is a procedural task-based framework for python
     # in this case, fig8_sm is a swarm instruction. This is covered in the next section.
 
-> SMACH DOCS TO READ
+> SMACH DOCS TO READ -->
 
 # swarm instructions
 
@@ -56,7 +58,7 @@ A state machine like the one above would be composed of different States. For in
 
 
 > More Examples: https://github.com/ThomasCarstens/Service_Drones_Thesis/blob/main/sm_structs.py
-## Usage
+<!-- ## Usage
 Our API packages swarm instructions, ie. commands with their own internal task management.
 
     fig8_sm = concurrent_trajs(selected_drones = [1, 2, 4], traj_id = 8)
@@ -74,7 +76,7 @@ Note how concurrent_trajs(...) returns a particular State of States.
                 SimpleActionState('fig8_drone'+str(id),
                                 doTrajAction, goal = doTrajGoal(shape = traj_id, id = drone_id)))
         return figure
-
+ -->
 
 # individual task execution
 
@@ -86,7 +88,7 @@ Note how concurrent_trajs(...) returns a particular State of States.
 
 > More Examples: https://github.com/ThomasCarstens/cfScripts/blob/master/ros_action_server.py
 
-## Usage
+<!-- ## Usage
 Within a particular swarm instruction, come calls to perform tasks. The python actionlib library references an instruction (here 'fig8_drone1', 'fig8_drone2'... and it is conveniently wrapped into a SimpleActionState to interface with the smach library.
 
     SimpleActionState('fig8_drone'+str(id),
@@ -103,7 +105,7 @@ SimpleActionState communicates the task to the ROS Action Server, which performs
 
 These robot instructions are encapsulated within a server callback.
 The server informs the execution with **feedback** and **result** data.
-
+ -->
 
 
 # getting started
