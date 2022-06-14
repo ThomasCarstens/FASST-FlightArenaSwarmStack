@@ -1,4 +1,7 @@
 
+| Code initiated on 20 November 2020 | Restructured API on 27 September 2021 | Quickstart at bottom | Contact: ThomasCarstens |
+| -- | -- | -- | -- |
+
 As part of the testbed for service drones, we offer a library of **well-known swarm behaviors**. This is the first collection of ‘swarm patterns’ known to-date on this swarm framework. The library is built with ROS 1 upon the Crazyswarm open-source project. 
 
 1. Encapsulating multi-step tasks.
@@ -12,9 +15,6 @@ As part of the testbed for service drones, we offer a library of **well-known sw
 3. Encapsulating individual task execution.
 
     *Robot-specific instructions are encapsulated within the swarm instructions.*
-
-| Code initiated on 20 November 2020 | Restructured API on 27 September 2021 | Quickstart at bottom | Contact: ThomasCarstens |
-| -- | -- | -- | -- |
 
 
 
