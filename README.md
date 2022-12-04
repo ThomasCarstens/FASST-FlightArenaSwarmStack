@@ -1,11 +1,25 @@
 # FD for dronelab
+⚠️  Busy migrating to ROS2, please check ROS1 branch for original work/readme.
+> https://github.com/ThomasCarstens/swarmStack_flightarena/tree/main
 
-## This USB has persistence (not live)
-30G/; 30G/home;
-After initial install: (without install local ros2)
-13.8G/; 19.9G/home
-After Ros2 setup: ( minus 10.9GB from ros2 built from source)
-13.2G/; 18.4G/home
+# Run instructions
+Github passkey:
+txa@zone2$ ~/home/txa/codes
+
+```
+$ unityhub
+# Tested with ROS_UNITY_FollowingTutorial (Unity 2020.3)
+
+$ docker run -it --rm -p 10000:10000 foxy /bin/bash
+$ ros2 run ros_tcp_endpoint default_server_endpoint --ros-args -p ROS_IP:=127.0.0.1 -p ROS_TCP_PORT:=10000
+```
+------------------------------------------------
+
+
+## USB:txa@zone2 has Ubuntu20.04 set up with persistence (not live)
+- Partitions | 30G/; 30G/home;
+- After initial install: (without install local ros2) | 13.8G/; 19.9G/home
+- After Ros2 setup: ( minus 10.9GB from ros2 built from source) | 13.2G/; 18.4G/home
 
 ### Storage suggestions (~txa): 
 I deactivated updates, removed unnecessary software
@@ -82,15 +96,3 @@ Multi-step applications bring together the tasks defined in lower levels.
 > More Examples: https://github.com/ThomasCarstens/swarmStack_flightarena/blob/ros1/readme.md
 
 
-# Run instructions
-Github passkey:
-txa@zone2$ ~/home/txa/codes
-
-```
-$ unityhub
-# Tested with ROS_UNITY_FollowingTutorial (Unity 2020.3)
-
-$ docker run -it --rm -p 10000:10000 foxy /bin/bash
-$ ros2 run ros_tcp_endpoint default_server_endpoint --ros-args -p ROS_IP:=127.0.0.1 -p ROS_TCP_PORT:=10000
-```
-------------------------------------------------
