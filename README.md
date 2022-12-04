@@ -79,12 +79,12 @@ Multi-step applications bring together the tasks defined in lower levels.
 | smlib.oneDrone_ToAndFro (id: _int32 drone reference_) | smlib.execOctogonAndTrajOnCollision (ids: _int32[] drone references_) | |
 | # move to position 1<br># move to position 2<br># and loop<br># land if abort | # position drone 1<br># position drone 2<br># concurrent figures of eight<br># 3 drone octogon<br># generalized landing<br># if Unity3D flag appears:<br># if so, concurrent helis | |
 
-> More Examples: https://github.com/ThomasCarstens/Service_Drones_Thesis/blob/main/sm_structs.py
+> More Examples: https://github.com/ThomasCarstens/swarmStack_flightarena/blob/ros1/readme.md
 
 
 # Run instructions
 Github passkey:
-~/home/txa/codes
+txa@zone2$ ~/home/txa/codes
 
 ```
 $ unityhub
