@@ -1,10 +1,10 @@
-# FD for dronelab
+# Flashdrive for robotic crossreality
 ⚠️  Busy migrating to ROS2, please check ROS1 branch for original work/readme.
 > https://github.com/ThomasCarstens/swarmStack_flightarena/tree/main
 
 # Run instructions
 Github passkey:
-txa@zone2$ ~/home/txa/codes
+txa@zone2$ cat ~/home/txa/codes
 
 ```
 $ unityhub
