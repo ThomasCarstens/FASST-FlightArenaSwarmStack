@@ -1,4 +1,4 @@
-# FlightArenaSwarmStack
+# FlightArenaSwarmStack (FASST)
 ⚠️  Busy migrating to ROS2, please check ROS1 branch for original work/readme.
 > https://github.com/ThomasCarstens/swarmStack_flightarena/tree/ros2
 
